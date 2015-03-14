@@ -1,0 +1,14 @@
+LuaXPath is a small and simple library that implements xpath capabilities.
+
+This library depends on LuaExpat.
+
+Here goes a small description of the files in the distribution
+
+    index.html       -- Home page
+    license.html     -- Copyright & License
+    Makefile         -- Makefile for *nix systems
+    manual.html      -- Reference manual
+    README           -- This file
+    test.lua         -- A small test file
+    xpath.lua        -- Source file
+
