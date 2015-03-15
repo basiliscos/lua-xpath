@@ -4,4 +4,4 @@ install:
   - sudo apt-get install luarocks
   - luarocks install --local lua-testmore
 
-script: test.sh
+script: ./test.sh
