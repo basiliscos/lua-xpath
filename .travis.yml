@@ -3,6 +3,6 @@ language: perl
 install:
   - sudo apt-get install luarocks
   - luarocks install --local lua-testmore
-  - luarocks isntall --local luaxpath
+  - luarocks install --local luaxpath
 
 script: ./test.sh
