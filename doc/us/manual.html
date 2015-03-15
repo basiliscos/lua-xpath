@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>lua-xpath: Simple XPath implementation in the Lua programming language</title>
+    <link rel="stylesheet" href="doc.css" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  </head>
+
+  <body>
+
+    <div id="container">
+
+      <div id="product">
+        <div id="product_logo">
+          <a href="http://www.keplerproject.org">
+            <img alt="lua-xpath" src="lua.gif"/>
+          </a>
+        </div>
+        <div id="product_name"><big><strong>lua-xpath</strong></big></div>
+        <div id="product_description">Simple XPath implementation in the Lua programming language</div>
+      </div> <!-- id="product" -->
+      <div id="main">
+        <div id="navigation">
+          <h1>lua-xpath</h1>
+	  <ul>
+	    <li><strong>Home</strong>
+	      <ul> 
+		<li><a href="index.html#overview">Overview</a></li>
+		<li><a href="index.html#status">Status</a></li>
+		<li><a href="index.html#download">Download</a></li>
+		<li><a href="index.html#history">History</a></li>
+		<li><a href="index.html#credits">Credits</a></li>
+		<li><a href="index.html#contact">Contact us</a></li>
+	      </ul>
+	    </li>
+	    <li><a href="manual.html">Manual</a>
+	      <ul>
+		<li><a href="manual.html#introduction">Introduction</a></li>
+		<li><a href="manual.html#usage">Usage</a></li>
+		<li><a href="manual.html#examples">Examples</a></li>
+		<li><a href="manual.html#related_docs">Related documentation</a></li>
+	      </ul>
+	    </li>
+            <li><a href="https://github.com/basiliscos/lua-xpath">Project</a>
+              <ul>
+                <li><a href="https://github.com/basiliscos/lua-xpath/issues">Bug Tracker</a></li>
+                <li><a href="https://github.com/basiliscos/lua-xpath">Git</a></li>
+              </ul>
+            </li>
+	    <li><a href="license.html">License</a></li>
+	  </ul>
+        </div> <!-- id="navigation" -->
+
+<div id="content">        
+<h2><a name="introduction"></a>Introduction</h2>        
+
+<p>
+  lua-xpath is a simple <a href="http://www.lua.org">provides a very Lua</a> library that implements <a href="http://www.w3.org/TR/xpath">XPath</a> technology.
+</p>
+
+<p>
+  It enables a Lua program to fetch parts of an XML using xpath expressions.
+</p>
+<p>
+  lua-xpath is based on <a href="http://www.keplerproject.org/luaexpat">LuaExpat</a> and on <a href="http://www.lua.org">Lua 5.1</a>.
+</p>
+
+
+<h2><a name="usage"></a>Usage</h2>        
+
+<pre class="example">
+  require "luaxpath"
+  local lom = require "lxp.lom"
+
+  xpath.selectNodes(lom.parse(xmlString),xpathExpression)
+</pre>
+
+<h2><a name="examples"></a>Examples</h2>        
+
+<pre class="example">
+require "luaxpath"
+local lom = require "lxp.lom"
+
+local xmlTest =
+[[
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;root&gt;
+	&lt;element id="1" name="element1"&gt;text of the first element&lt;/element&gt;
+        &lt;element id="2" name="element2"&gt;
+		&lt;subelement&gt;text of the second element&lt;/subelement&gt;
+        &lt;/element&gt;
+&lt;/root&gt;
+]]
+
+-- get all elements
+xpath.selectNodes(lom.parse(xmlTest),'//element')
+-- get the subelement text
+xpath.selectNodes(lom.parse(xmlTest),'/root/element/subelement/text()')
+-- get the first element
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[@id="1"]')
+</pre>
+
+<h2><a name="related_docs"></a>Related documentation</h2>        
+
+<ul>
+  <li><a href="http://www.w3.org/TR/xpath">W3C XPath Standard</a></li>
+  <li><a href="http://www.w3schools.com/xpath">W3schools XPath Tutorial</a></li>
+</ul>
+
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
