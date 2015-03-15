@@ -1,10 +1,7 @@
 language: perl
 
 install:
-  - sudo apt-get install luajit
   - sudo apt-get install luarocks
-  - sudo luarocks install luafilesystem
-  - sudo luarocks install busted
+  - luarocks install --local lua-testmore
 
-script:
-  - eval `luarocks path`
+script: test.sh
