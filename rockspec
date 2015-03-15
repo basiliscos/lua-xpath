@@ -1,14 +1,12 @@
 package = "luaxpath"
-version = "1.0-1"
+version = "1.2-1"
 source = {
    url = "..." -- We don't have one yet
 }
 description = {
-   summary = "An example for the LuaRocks tutorial.",
+   summary = "Simple XPath implementation in the Lua programming language.",
    detailed = [[
-       This is an example for the LuaRocks tutorial.
-       Here we would put a detailed, typically
-       paragraph-long description.
+       It enables a Lua program to fetch parts of an XML using xpath expressions.
    ]],
    homepage = "http://...", -- We don't have one yet
    license = "MIT"
