@@ -1,6 +1,10 @@
-# lua-xpath
+lua-xpath
+=========
 
 *lua-xpath* is a small and simple library that implements xpath capabilities.
+
+[![Build Status](https://travis-ci.org/basiliscos/lua-xpath.png)](https://travis-ci.org/basiliscos/lua-xpath.png)
+
 
 This library depends on LuaExpat.
 
