@@ -1,8 +1,14 @@
 #!/usr/bin/env lua
 
 require 'Test.More'
-require "xpath"
+require "luaxpath"
+require "luaxpath.datadumper"
 local lom = require "lxp.lom"
+
+-- there is need of that function to see what's going on
+-- function dump(...)
+--   print(DataDumper(...), "\n---")
+-- end
 
 local xmlTest =
 [[
@@ -16,6 +22,7 @@ local xmlTest =
 ]]
 
 local root = lom.parse(xmlTest)
+-- dump(root)
 
 subtest("get all elements", function()
     plan(2)

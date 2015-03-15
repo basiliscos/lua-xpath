@@ -5,11 +5,15 @@
 -- Version: 0.1
 -- Date: 2008-01-15
 -----------------------------------------------------------------------------
+-- Version: 1.2
+-- Author: Ivan Baidakou (basiliscos)
+-- Date: 2015-03-14
+-----------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------
 -- Declare module and import dependencies
 -----------------------------------------------------------------------------
-require "modules.utils"
+require "luaxpath.utils"
 local lom = require "lxp.lom"
 
 module("xpath",package.seeall)
