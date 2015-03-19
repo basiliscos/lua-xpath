@@ -13,7 +13,6 @@
 -----------------------------------------------------------------------------
 -- Declare module and import dependencies
 -----------------------------------------------------------------------------
-require "luaxpath.utils"
 local lom = require "lxp.lom"
 
 
@@ -25,6 +24,26 @@ function XPath._new(option)
    setmetatable(o, XPath)
    return o
 end
+
+function _split(str, pat)
+   local t = {}  -- NOTE: use {n = 0} in Lua-5.0
+   local fpat = "(.-)" .. pat
+   local last_end = 1
+   local s, e, cap = str:find(fpat, 1)
+   while s do
+      if s ~= 1 or cap ~= "" then
+	 	table.insert(t,cap)
+      end
+      last_end = e+1
+      s, e, cap = str:find(fpat, last_end)
+   end
+   if last_end <= #str then
+      cap = str:sub(last_end)
+      table.insert(t, cap)
+   end
+   return t
+end
+
 
 -- local resultTable,option = {},nil
 
@@ -139,7 +158,7 @@ function selectNodes(xml,xpath)
 	table.insert(xmlTree,xml)
 	assert(type(xpath) == "string")
 	
-	tags = split(xpath,'[\\/]+')
+	tags = _split(xpath,'[\\/]+')
 	
 	local lastTag = tags[#tags] 
 	if lastTag == "text()" or lastTag == "node()" or lastTag:find("@") == 1 then

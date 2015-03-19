@@ -2,13 +2,7 @@
 
 require 'Test.More'
 local x = require "luaxpath"
-require "luaxpath.datadumper"
 local lom = require "lxp.lom"
-
--- there is need of that function to see what's going on
--- function dump(...)
---   print(DataDumper(...), "\n---")
--- end
 
 local xmlTest =
 [[
