@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 require 'Test.More'
-require "luaxpath"
+local x = require "luaxpath"
 require "luaxpath.datadumper"
 local lom = require "lxp.lom"
 
@@ -26,7 +26,7 @@ local root = lom.parse(xmlTest)
 
 subtest("get all elements", function()
     plan(2)
-    local selected = xpath.selectNodes(root, '//element')
+    local selected = x.selectNodes(root, '//element')
     is(#selected, 2);
     is_deeply(selected[1], {
         'text of the first element',
@@ -37,16 +37,24 @@ end)
 
 subtest("get the subelement text", function()
     plan(1)
-    local text = xpath.selectNodes(root, '/root/element/subelement/text()')
+    local text = x.selectNodes(root, '/root/element/subelement/text()')
     is_deeply(text, { 'text of the second element' })
 end)
 
 
 subtest("get the first element", function()
     plan(2)
-    local nodes = xpath.selectNodes(root, '/root/element[@id="1"]')
+    local nodes = x.selectNodes(root, '/root/element[@id="1"]')
     is( #nodes, 1)
     is( nodes[1]['attr']['id'], "1")
 end)
+
+-- not done yet
+-- subtest("get node by index", function()
+--     plan(2)
+--     local nodes = x.selectNodes(root, '/root/element[1]')
+--     is( #nodes, 1)
+--     is( nodes[1]['attr']['id'], "1")
+-- end)
 
 done_testing(3)

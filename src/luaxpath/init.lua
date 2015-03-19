@@ -16,26 +16,37 @@
 require "luaxpath.utils"
 local lom = require "lxp.lom"
 
-module("xpath",package.seeall)
 
-local resultTable,option = {},nil
+local XPath = {}
+XPath.__index = XPath
+
+function XPath._new(option)
+   local o = { _result_table = {}, _option = option }
+   setmetatable(o, XPath)
+   return o
+end
+
+-- local resultTable,option = {},nil
 
 -----------------------------------------------------------------------------
 -- Supported functions
 -----------------------------------------------------------------------------
 
-local function insertToTable(leaf)
-	if type(leaf) == "table" then
-		if option == nil then
-			table.insert(resultTable,leaf)
-		elseif option == "text()" then
-			table.insert(resultTable,leaf[1])
-		elseif option == "node()" then
-			table.insert(resultTable,leaf.tag)
-		elseif option:find("@") == 1 then
-			table.insert(resultTable,leaf.attr[option:sub(2)])
-		end
-	end
+function XPath:_insert_leaf(leaf)
+   local option = self._option
+   if type(leaf) == "table" then
+      local value
+      if option == nil then
+         value = leaf
+      elseif option == "text()" then
+         value = leaf[1]
+      elseif option == "node()" then
+         value = leaf.tag
+      elseif option:find("@") == 1 then
+         value = leaf.attr[option:sub(2)]
+      end
+      table.insert(self._result_table, value)
+   end
 end
 
 
@@ -83,7 +94,7 @@ local function match(tag,tagAttr,tagExpr,nextTag)
 	
 end
 
-local function parseNodes(tags,xmlTable,counter)
+function XPath:parseNodes(tags, xmlTable, counter)
 	if counter > #tags then
 		return nil
 	end
@@ -98,20 +109,20 @@ local function parseNodes(tags,xmlTable,counter)
 				local x,y = match(value.tag,value.attr,currentTag,nextTag)
 				if x then
 					if #tags == counter then
-						insertToTable(value)
+                       self:_insert_leaf(value)
 					else
-						parseNodes(tags,value,counter+1)
+                       self:parseNodes(tags,value,counter+1)
 					end
 				else
 					if y ~= nil then
 						if y == 1 then
 							if counter+1 == #tags then
-								insertToTable(value)
+                               self:_insert_leaf(value)
 							else
-								parseNodes(tags,value,counter+2)
+								self:parseNodes(tags,value,counter+2)
 							end
 						else
-							parseNodes(tags,value,counter)
+							self:parseNodes(tags,value,counter)
 						end
 					end
 				end
@@ -124,7 +135,6 @@ function selectNodes(xml,xpath)
 	assert(type(xml) == "table")
 	assert(type(xpath) == "string")
 	
-	resultTable = {}
 	local xmlTree = {}
 	table.insert(xmlTree,xml)
 	assert(type(xpath) == "string")
@@ -142,11 +152,14 @@ function selectNodes(xml,xpath)
 	if xpath:find("//") == 1 then
 		table.insert(tags,1,"")
 	end
-	
-	parseNodes(tags,xmlTree,1)
-	return resultTable
+
+    local ctx = XPath._new(option)
+	ctx:parseNodes(tags, xmlTree, 1)
+	return ctx._result_table
 end
 
-
+return {
+   selectNodes = selectNodes,
+}
 
 
