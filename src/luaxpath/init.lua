@@ -13,8 +13,6 @@
 -----------------------------------------------------------------------------
 -- Declare module and import dependencies
 -----------------------------------------------------------------------------
-local lom = require "lxp.lom"
-
 
 local XPath = {}
 XPath.__index = XPath
