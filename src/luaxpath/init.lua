@@ -23,7 +23,7 @@ function XPath._new(option)
    return o
 end
 
-function _split(str, pat)
+local function _split(str, pat)
    local t = {}  -- NOTE: use {n = 0} in Lua-5.0
    local fpat = "(.-)" .. pat
    local last_end = 1
@@ -148,7 +148,7 @@ function XPath:parseNodes(tags, xmlTable, counter)
 	end
 end
 
-function selectNodes(xml,xpath)
+local function selectNodes(xml,xpath)
 	assert(type(xml) == "table")
 	assert(type(xpath) == "string")
 	
