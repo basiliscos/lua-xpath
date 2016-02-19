@@ -152,8 +152,7 @@ function selectNodes(xml,xpath)
 	assert(type(xml) == "table")
 	assert(type(xpath) == "string")
 	
-	local xmlTree = {}
-	table.insert(xmlTree,xml)
+	local xmlTree = { xml }
 	
 	local tags = _split(xpath,'[\\/]+')
 	
