@@ -156,7 +156,7 @@ function selectNodes(xml,xpath)
 	table.insert(xmlTree,xml)
 	assert(type(xpath) == "string")
 	
-	tags = _split(xpath,'[\\/]+')
+	local tags = _split(xpath,'[\\/]+')
 	
 	local lastTag = tags[#tags] 
 	if lastTag == "text()" or lastTag == "node()" or lastTag:find("@") == 1 then
