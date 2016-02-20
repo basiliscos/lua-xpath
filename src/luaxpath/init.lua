@@ -9,6 +9,10 @@
 -- Author: Ivan Baidakou (basiliscos)
 -- Date: 2015-03-14
 -----------------------------------------------------------------------------
+-- Version: 1.2.3
+-- Author: blumf
+-- Date: 2015-02-20
+-----------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------
 -- Declare module and import dependencies
@@ -69,12 +73,12 @@ end
 
 local function match(tag,tagAttr,tagExpr,nextTag)
 	local expression,evalTag
-	
+
 	-- check if its a wild card
 	if tagExpr == "*" then
 		return true
 	end
-	
+
 	-- check if its empty
 	if tagExpr == "" then
 		if tag == nextTag then
@@ -83,7 +87,7 @@ local function match(tag,tagAttr,tagExpr,nextTag)
 			return false,0
 		end
 	end
-	
+
 	-- check if there is an expression to evaluate
 	if tagExpr:find("[[]") ~= nil and tagExpr:find("[]]") ~= nil then
 		evalTag = tagExpr:sub(1,tagExpr:find("[[]")-1)
@@ -94,7 +98,7 @@ local function match(tag,tagAttr,tagExpr,nextTag)
 	else
 		return (tag == tagExpr)
 	end
-	
+
 	-- check if the expression is an attribute
 	if expression:find("@") ~= nil then
 		local evalAttr,evalValue
@@ -149,19 +153,19 @@ end
 local function selectNodes(xml,xpath)
 	assert(type(xml) == "table")
 	assert(type(xpath) == "string")
-	
+
 	local xmlTree = { xml }
-	
+
 	local tags = _split(xpath,'[\\/]+')
-	
-	local lastTag = tags[#tags] 
+
+	local lastTag = tags[#tags]
 	if lastTag == "text()" or lastTag == "node()" or lastTag:find("@") == 1 then
 		option = tags[#tags]
 		table.remove(tags,#tags)
 	else
 		option = nil
 	end
-	
+
 	if xpath:find("//") == 1 then
 		table.insert(tags,1,"")
 	end
