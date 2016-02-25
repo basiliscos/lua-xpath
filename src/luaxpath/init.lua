@@ -122,7 +122,7 @@ function XPath:parseNodes(tags, xmlTable, counter)
 	if #tags > counter then
 		nextTag = tags[counter+1]
 	end
-	for i,value in ipairs(xmlTable) do
+	for _,value in ipairs(xmlTable) do
 		if type(value) == "table" then
 			if value.tag ~= nil and value.attr ~= nil then
 				local x,y = match(value.tag,value.attr,currentTag,nextTag)
@@ -155,15 +155,13 @@ local function selectNodes(xml,xpath)
 	assert(type(xpath) == "string")
 
 	local xmlTree = { xml }
-
+  local option
 	local tags = _split(xpath,'[\\/]+')
 
 	local lastTag = tags[#tags]
 	if lastTag == "text()" or lastTag == "node()" or lastTag:find("@") == 1 then
 		option = tags[#tags]
 		table.remove(tags,#tags)
-	else
-		option = nil
 	end
 
 	if xpath:find("//") == 1 then
