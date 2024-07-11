@@ -73,7 +73,7 @@
   require "luaxpath"
   local lom = require "lxp.lom"
 
-  xpath.selectNodes(lom.parse(xmlString),xpathExpression)
+  xpath.selectNodes(lom.parse(xmlString),xpathExpression,ignoreCase)
 </pre>
 
 <h2><a name="examples"></a>Examples</h2>        
@@ -86,19 +86,37 @@ local xmlTest =
 [[
 &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 &lt;root&gt;
-	&lt;element id="1" name="element1"&gt;text of the first element&lt;/element&gt;
-        &lt;element id="2" name="element2"&gt;
-		&lt;subelement&gt;text of the second element&lt;/subelement&gt;
-        &lt;/element&gt;
+  &lt;element id="1" name="element1"&gt;text of the first element&lt;/element&gt;
+  &lt;element id="2" name="element2"&gt;
+    &lt;subelement&gt;text of the second element&lt;/subelement&gt;
+  &lt;/element&gt;
+  &lt;test:newElement id="1" name="newElement"&gt;text of the new element
+    &lt;test&gt;text of the test element&lt;/test&gt;
+  &lt;/test:newElement&gt;  
 &lt;/root&gt;
 ]]
 
--- get all elements
+-- get all element nodes
 xpath.selectNodes(lom.parse(xmlTest),'//element')
--- get the subelement text
+
+-- get the subelement node's text
 xpath.selectNodes(lom.parse(xmlTest),'/root/element/subelement/text()')
--- get the first element
+
+-- get the element with an attribute of "id" that has the value of "1"
 xpath.selectNodes(lom.parse(xmlTest),'/root/element[@id="1"]')
+
+-- get the 2nd element node
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[2]')
+
+-- get the first element node, with ignoring the case of element
+xpath.selectNodes(lom.parse(xmlTest),'/root/ELEMENT[1]',true)
+
+-- get the newElement node and make use of the namespace in the tag name
+xpath.selectNodes(lom.parse(xmlTest),'/root/test:newElement')
+
+-- get the node that has a child node that contains a tag name of subelement
+xpath.selectNodes(lom.parse(xmlTest),'//element[name="subelement"]')
+
 </pre>
 
 <h2><a name="related_docs"></a>Related documentation</h2>        

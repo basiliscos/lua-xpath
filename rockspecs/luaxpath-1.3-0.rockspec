@@ -1,8 +1,8 @@
 package = "luaxpath"
-version = "1.2-4"
+version = "1.3-0"
 source = {
    url = "git://github.com/basiliscos/lua-xpath",
-   tag = "v1.2.4",
+   tag = "v1.3.0",
 }
 description = {
    summary = "Simple XPath implementation in the Lua programming language.",
