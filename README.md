@@ -19,3 +19,4 @@ Contributors
 
 * blumf
 * Ivan Baidakou (basiliscos)
+* Rohan de Jongh (thepeanutgalleryandco)

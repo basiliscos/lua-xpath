@@ -73,7 +73,7 @@
   require "luaxpath"
   local lom = require "lxp.lom"
 
-  xpath.selectNodes(lom.parse(xmlString),xpathExpression)
+  xpath.selectNodes(lom.parse(xmlString),xpathExpression,ignoreCase)
 </pre>
 
 <h2><a name="examples"></a>Examples</h2>        
@@ -85,20 +85,54 @@ local lom = require "lxp.lom"
 local xmlTest =
 [[
 &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
-&lt;root&gt;
-	&lt;element id="1" name="element1"&gt;text of the first element&lt;/element&gt;
-        &lt;element id="2" name="element2"&gt;
-		&lt;subelement&gt;text of the second element&lt;/subelement&gt;
-        &lt;/element&gt;
+&lt;root xmlns:test="https://test.test/"&gt;
+  &lt;element id="1" name="element1"&gt;text of the first element&lt;/element&gt;
+  &lt;element id="2" name="element2"&gt;
+    &lt;subelement&gt;text of the second element&lt;/subelement&gt;
+  &lt;/element&gt;
+  &lt;test:newElement id="1" name="newElement"&gt;
+    &lt;test&gt;text of the test element&lt;/test&gt;
+  &lt;/test:newElement&gt;
 &lt;/root&gt;
 ]]
 
 -- get all elements
 xpath.selectNodes(lom.parse(xmlTest),'//element')
+
 -- get the subelement text
 xpath.selectNodes(lom.parse(xmlTest),'/root/element/subelement/text()')
--- get the first element
+
+-- get the element by attribute id 1
 xpath.selectNodes(lom.parse(xmlTest),'/root/element[@id="1"]')
+
+-- get node two by index
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[2]')
+
+-- get the first element node, with ignoring the case of element
+xpath.selectNodes(lom.parse(xmlTest),'/root/ELEMENT[1]',true)
+
+-- get the newElement node and make use of the namespace in the tag name
+xpath.selectNodes(lom.parse(xmlTest),'/root/test:newElement')
+
+-- get the node that has a child node that contains a tag name of subelement
+xpath.selectNodes(lom.parse(xmlTest),'//element[name="subelement"]')
+
+-- get any node that has an attribute of test
+xpath.selectNodes(lom.parse(xmlTest),'//*/@test')
+
+-- get the node by name
+xpath.selectNodes(lom.parse(xmlTest),'/root/element/node()')
+
+-- get all child nodes of root
+xpath.selectNodes(lom.parse(xmlTest),'/root/*')
+
+-- get all child nodes of root that contains an attribute of name which is equal to element
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[contains(@name, "element")]')
+
+-- get all element nodes that contains an attribute of name which starts with ele
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[starts-with(@name, "ele")]')
+
+
 </pre>
 
 <h2><a name="related_docs"></a>Related documentation</h2>        
