@@ -3,7 +3,6 @@
 require 'Test.More'
 local x = require "luaxpath"
 local lom = require "lxp.lom"
-local json = require "cjson"
 
 local xmlTest =
 [[
@@ -98,7 +97,6 @@ end)
 -- subtest("get all child nodes of root that contains a name of element", function()
 --     plan(1)
 --     local nodes = x.selectNodes(root, '/root[contains(name, "element")]')
---     print(json.encode(nodes))
 --     is( #nodes, 3);
 -- end)
 
