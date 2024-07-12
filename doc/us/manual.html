@@ -126,9 +126,12 @@ xpath.selectNodes(lom.parse(xmlTest),'/root/element/node()')
 -- get all child nodes of root
 xpath.selectNodes(lom.parse(xmlTest),'/root/*')
 
--- not done
--- get all child nodes of root that contains a name of element
--- xpath.selectNodes(lom.parse(xmlTest),'/root[contains(name, "element")]')
+-- get all child nodes of root that contains an attribute of name which is equal to element
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[contains(@name, "element")]')
+
+-- get all element nodes that contains an attribute of name which starts with ele
+xpath.selectNodes(lom.parse(xmlTest),'/root/element[starts-with(@name, "ele")]')
+
 
 </pre>
 

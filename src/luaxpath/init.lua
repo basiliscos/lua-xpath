@@ -15,7 +15,7 @@
 -----------------------------------------------------------------------------
 -- Version: 1.3.0
 -- Author: Rohan de Jongh (roebou / thepeanutgalleryandco) + ChatGPT (4.0)
--- Date: 2024-07-11
+-- Date: 2024-07-12
 -----------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------
@@ -101,15 +101,15 @@ local function eval_predicate(value, predicate, ignoreCase)
     end
 
     -- Check for functions like contains() and starts-with()
-    local func, param = predicate:match("([%w]+)%(([%w@]+)%)")
+    local func, param, pattern = predicate:match("([%w-]+)%((@[%w:]+),%s*['\"]([^'\"]+)['\"]%)")
     if func == "contains" then
         local attr2 = param:match("@([%w:]+)")
         if attr2 then
             local v = value.attr and value.attr[attr2]
             if ignoreCase then
-                return v and v:lower():find(val:lower()) ~= nil
+                return v and v:lower():find(pattern:lower()) ~= nil
             else
-                return v and v:find(val) ~= nil
+                return v and v:find(pattern) ~= nil
             end
         end
     elseif func == "starts-with" then
@@ -117,9 +117,9 @@ local function eval_predicate(value, predicate, ignoreCase)
         if attr3 then
             local v = value.attr and value.attr[attr3]
             if ignoreCase then
-                return v and v:lower():sub(1, #val) == val:lower()
+                return v and v:lower():sub(1, #pattern) == pattern:lower()
             else
-                return v and v:sub(1, #val) == val
+                return v and v:sub(1, #pattern) == pattern
             end
         end
     end

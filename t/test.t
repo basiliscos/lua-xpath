@@ -93,11 +93,16 @@ subtest("get all child nodes of root", function()
     is( #nodes, 3);
 end)
 
--- not done
--- subtest("get all child nodes of root that contains a name of element", function()
---     plan(1)
---     local nodes = x.selectNodes(root, '/root[contains(name, "element")]')
---     is( #nodes, 3);
--- end)
+subtest("get all element nodes that contains an attribute of name which is equal to element", function()
+    plan(1)
+    local nodes = x.selectNodes(root, '/root/element[contains(@name, "element")]')
+    is( #nodes, 2);
+end)
 
-done_testing(10)
+subtest("get all element nodes that contains an attribute of name which starts with ele", function()
+    plan(1)
+    local nodes = x.selectNodes(root, '/root/element[starts-with(@name, "ele")]')
+    is( #nodes, 2);
+end)
+
+done_testing(12)
